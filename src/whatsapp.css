@@ -1,0 +1,10 @@
+.whatsapp-button {
+  margin-top: 18px;
+  background: #25d366;
+  border-color: #25d366;
+  color: #073b1c;
+}
+
+.whatsapp-button:hover {
+  filter: brightness(1.06);
+}

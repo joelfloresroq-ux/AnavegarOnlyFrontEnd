@@ -1,0 +1,15 @@
+.account-page { background: #f6f6fa; min-height: 620px; padding: 64px 10%; }
+.account-heading { margin-bottom: 30px; }
+.account-heading h1 { font-size: 42px; }
+.account-heading > p:last-child { color: #6b6879; }
+.account-grid { display: grid; grid-template-columns: 230px 1fr; gap: 20px; }
+.account-grid aside { display: flex; flex-direction: column; gap: 14px; background: #fff; padding: 25px; border-top: 4px solid #004B7D; height: max-content; }
+.account-grid aside span { font-size: 13px; color: #6b6879; }
+.account-grid aside button { text-align: left; border: 0; padding: 0; background: transparent; color: #004B7D; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 8px; }
+.account-content { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.account-content .form { box-shadow: none; border: 1px solid #e7e5ed; }
+.account-content h2 { font-size: 21px; margin-bottom: 8px; }
+.account-message { grid-column: 1 / -1; margin: 0; color: #004B7D; font-weight: 700; font-size: 13px; }
+.account-empty { max-width: 550px; background: #fff; padding: 45px; margin: 40px auto; text-align: center; }
+.account-empty p { color: #6b6879; margin: 15px 0 25px; }
+@media (max-width: 760px) { .account-page { padding: 45px 20px; } .account-heading h1 { font-size: 34px; } .account-grid, .account-content { grid-template-columns: 1fr; } }

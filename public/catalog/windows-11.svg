@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Windows 11">
+  <rect width="800" height="500" fill="#f7fbfc"/>
+  <g fill="#008DA7"><path d="M125 110 335 80v150H125z"/><path d="m365 76 310-44v198H365z"/><path d="M125 290h210v150l-210-30z"/><path d="M365 290h310v178l-310-44z"/></g>
+  <text x="400" y="470" text-anchor="middle" fill="#004B7D" font-family="Arial, sans-serif" font-size="54" font-weight="700">Windows 11</text>
+</svg>

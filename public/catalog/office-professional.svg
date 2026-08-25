@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Office Professional Plus">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#004B7D"/><stop offset="1" stop-color="#008DA7"/></linearGradient></defs>
+  <rect width="800" height="500" rx="26" fill="#f4f9fb"/><rect x="216" y="55" width="368" height="390" rx="18" fill="url(#g)"/>
+  <path d="M390 130l105 48v143l-105 49-85-38V168z" fill="#fff" opacity=".95"/><path d="M390 170v160l-43-19V189z" fill="#d8f4f8"/>
+  <text x="400" y="405" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="25" font-weight="700">OFFICE PROFESSIONAL</text>
+</svg>
