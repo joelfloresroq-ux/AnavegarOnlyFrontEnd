@@ -73,6 +73,17 @@ function Header() {
           </aside>
         </div>
       </div>
+      <div className="mobile-category-shortcuts" aria-label="Categorías destacadas">
+        <p>Explora por categoría</p>
+        <div>
+          <Link to="/tienda#licencias" onClick={() => setOpen(false)}><i>▣</i> Licencias</Link>
+          <Link to="/tienda#teclados" onClick={() => setOpen(false)}><i>⌨</i> Teclados</Link>
+          <Link to="/tienda#mouse" onClick={() => setOpen(false)}><i>◉</i> Mouse</Link>
+          <Link to="/tienda#audio" onClick={() => setOpen(false)}><i>◖</i> Audífonos</Link>
+          <Link to="/tienda#impresoras" onClick={() => setOpen(false)}><i>▤</i> Impresoras</Link>
+          <Link to="/tienda#cables-conectividad" onClick={() => setOpen(false)}><i>⌁</i> Cables y conexión</Link>
+        </div>
+      </div>
       <NavLink end to="/" onClick={() => setOpen(false)}>Inicio</NavLink><NavLink to="/tienda" onClick={() => setOpen(false)}>Tienda</NavLink><NavLink to="/servicios" onClick={() => setOpen(false)}>Servicio técnico</NavLink><NavLink to="/soporte" onClick={() => setOpen(false)}>Ayuda al cliente</NavLink>
     </nav>
   </>
