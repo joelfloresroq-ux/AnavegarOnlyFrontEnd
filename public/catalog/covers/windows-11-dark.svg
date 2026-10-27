@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="WINDOWS PERMANENTE">
+<defs>
+<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b1722"/><stop offset="1" stop-color="#0f2f4d"/></linearGradient>
+<radialGradient id="gl" cx=".5" cy=".42" r=".5"><stop offset="0" stop-color="#0078D4" stop-opacity="0.38"/><stop offset="1" stop-color="#0078D4" stop-opacity="0"/></radialGradient>
+<filter id="sh" x="-30%" y="-20%" width="160%" height="160%"><feDropShadow dx="0" dy="22" stdDeviation="22" flood-color="#000" flood-opacity="0.6"/></filter>
+<filter id="ms" x="-30%" y="-30%" width="160%" height="180%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#000" flood-opacity="0.5"/></filter>
+</defs>
+<rect width="1200" height="900" fill="url(#bg)"/>
+<circle cx="1040" cy="120" r="280" fill="#ffffff" opacity="0.035"/><circle cx="130" cy="800" r="230" fill="#ffffff" opacity="0.03"/>
+<ellipse cx="600" cy="400" rx="520" ry="400" fill="url(#gl)"/>
+<ellipse cx="600" cy="752" rx="300" ry="22" fill="#000" opacity="0.45"/>
+<g filter="url(#sh)">
+<path d="M413 78 L365 98 V652 L413 670Z" fill="#b9cbe6"/>
+<rect x="413" y="78" width="420" height="592" rx="5" fill="url(#w11)"/>
+<path d="M413 78 H833 L583 670 H413Z" fill="#fff" opacity=".10"/>
+<rect x="413" y="78" width="420" height="592" rx="5" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="2"/>
+<defs><linearGradient id="w11" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f8ff"/><stop offset="1" stop-color="#dbe8fb"/></linearGradient><linearGradient id="w10" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0a4f9c"/><stop offset="1" stop-color="#0f86d9"/></linearGradient><radialGradient id="bl" cx=".3" cy=".8" r=".9"><stop offset="0" stop-color="#2c8cff"/><stop offset=".5" stop-color="#5b4cf0" stop-opacity=".7"/><stop offset="1" stop-color="#5b4cf0" stop-opacity="0"/></radialGradient></defs><path d="M413 458 C533 338 673 408 833 298 V670 H413Z" fill="url(#bl)" opacity=".9"/><path d="M413 548 C553 458 693 538 833 438 V670 H413Z" fill="#1a6cf0" opacity=".55"/>
+<g><rect x="449" y="124" width="15.98" height="15.98" fill="#f25022"/><rect x="467.02000000000004" y="124" width="15.98" height="15.98" fill="#7fba00"/><rect x="449" y="142.01999999999998" width="15.98" height="15.98" fill="#00a4ef"/><rect x="467.02000000000004" y="142.01999999999998" width="15.98" height="15.98" fill="#ffb900"/></g><text x="495" y="152" font-size="26" font-weight="600" fill="#5e6b76" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif">Microsoft</text>
+<text x="449" y="248" font-size="60" font-weight="700" fill="#1c2630" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif">Windows 11</text>
+<text x="451" y="300" font-size="38" font-weight="400" fill="#33414d" font-family="Segoe UI, Helvetica Neue, Arial, sans-serif">Pro</text>
+<g fill="#ffffff"><rect x="553" y="408" width="66.15" height="66.15"/><rect x="626.85" y="408" width="66.15" height="66.15"/><rect x="553" y="481.84999999999997" width="66.15" height="66.15"/><rect x="626.85" y="481.84999999999997" width="66.15" height="66.15"/></g></g>
+<g font-family="Segoe UI, Helvetica Neue, Arial, sans-serif" font-weight="800">
+<rect x="44" y="44" rx="26" width="192" height="52" fill="#ffffff" opacity="0.1"/>
+<text x="70" y="79" font-size="24" letter-spacing="2.4" fill="#e9f6fb">WINDOWS</text>
+<rect x="400" y="792" rx="42" width="400" height="84" fill="#0078D4" filter="url(#ms)"/>
+<text x="600" y="846" text-anchor="middle" font-size="34" letter-spacing="2" fill="#fff">PERMANENTE</text>
+</g></svg>
