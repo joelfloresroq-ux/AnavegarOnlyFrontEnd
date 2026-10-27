@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { Link } from './router.jsx'
-import { licenseProducts, accessoryProducts } from './catalog.js'
+import { licenseProducts } from './catalog.js'
 import { AddToCartButton } from './PurchaseGate.jsx'
 import './product-detail.css'
 
-const allProducts = [...licenseProducts, ...accessoryProducts]
+const allProducts = licenseProducts
 const money = (value) => `S/ ${value.toFixed(2)}`
 
 function ProductGallery({ product }) {
@@ -18,5 +18,5 @@ function ProductGallery({ product }) {
 export default function ProductDetail({ id }) {
   const product = allProducts.find((item) => item.id === id)
   if (!product) return <section className="detail-page"><h1>Producto no encontrado.</h1><Link className="button" to="/tienda">Volver a la tienda</Link></section>
-  return <section className="detail-page"><Link className="back-link" to="/tienda">← Volver a la tienda</Link><article className="product-detail"><ProductGallery product={product} /><div className="detail-info"><p className="eyebrow">{product.brand} · {product.type === 'license' ? 'LICENCIA DIGITAL' : 'ACCESORIO'}</p><h1>{product.name}</h1><p className="detail-description">{product.description}</p>{product.longDescription && <div className="detail-product-copy"><h2>Detalles del producto</h2><p>{product.longDescription}</p></div>}<div className="detail-price"><strong>{money(product.price)}</strong>{product.oldPrice && <del>{money(product.oldPrice)}</del>}</div><div className="detail-specs"><h2>Características</h2><ul>{product.details.map((item) => <li key={item}>✓ {item}</li>)}</ul></div>{product.specifications && <div className="detail-tech-specs"><h2>Especificaciones</h2>{product.specifications.map(([label, value]) => <p key={label}><b>{label}</b><span>{value}</span></p>)}</div>}<AddToCartButton className="button" product={product} /><Link className="button detail-cart" to="/carrito">Ver carrito</Link></div></article></section>
+  return <section className="detail-page"><Link className="back-link" to="/tienda">← Volver a la tienda</Link><article className="product-detail"><ProductGallery product={product} /><div className="detail-info"><p className="eyebrow">{product.brand} · {'LICENCIA DIGITAL'}</p><h1>{product.name}</h1><p className="detail-description">{product.description}</p>{product.longDescription && <div className="detail-product-copy"><h2>Detalles del producto</h2><p>{product.longDescription}</p></div>}<div className="detail-price"><strong>{money(product.price)}</strong>{product.oldPrice && <del>{money(product.oldPrice)}</del>}</div><div className="detail-specs"><h2>Características</h2><ul>{product.details.map((item) => <li key={item}>✓ {item}</li>)}</ul></div>{product.specifications && <div className="detail-tech-specs"><h2>Especificaciones</h2>{product.specifications.map(([label, value]) => <p key={label}><b>{label}</b><span>{value}</span></p>)}</div>}<AddToCartButton className="button" product={product} /><Link className="button detail-cart" to="/carrito">Ver carrito</Link></div></article></section>
 }

@@ -3,7 +3,7 @@ import { Link, NavLink, Route, Routes, usePath } from './router.jsx'
 import { Store, Cart, Checkout } from './Shop.jsx'
 import { CartProvider, useCart } from './cart.jsx'
 const anavegarLogo = '/brand/anavegar-logo-transparent.png'
-import { licenseProducts, accessoryCategories, accessoryProducts } from './catalog.js'
+import { licenseProducts } from './catalog.js'
 import ProductDetail from './ProductDetail.jsx'
 import './App.css'
 import './session.css'
@@ -37,7 +37,7 @@ function Header() {
   const [query, setQuery] = useState('')
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('tec_theme') === 'dark')
   const { count, lastAdded } = useCart()
-  const results = query.trim() ? [...licenseProducts, ...accessoryProducts].filter((product) => `${product.name} ${product.brand}`.toLowerCase().includes(query.toLowerCase())).slice(0, 6) : []
+  const results = query.trim() ? licenseProducts.filter((product) => `${product.name} ${product.brand}`.toLowerCase().includes(query.toLowerCase())).slice(0, 6) : []
   useEffect(() => {
     document.documentElement.dataset.theme = darkMode ? 'dark' : 'light'
     localStorage.setItem('tec_theme', darkMode ? 'dark' : 'light')
@@ -45,7 +45,7 @@ function Header() {
   return <>
     <header className="header">
       <Link className="brand-logo" to="/"><img src={anavegarLogo} alt="Anavegar Soluciones" /></Link>
-      <div className="search"><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Busca accesorios, licencias y más..." aria-label="Buscar productos" /><button aria-label="Buscar">⌕</button>{results.length > 0 && <div className="search-results">{results.map((product) => <Link key={product.id} to={`/producto/${product.id}`} onClick={() => setQuery('')}><img src={product.image} alt="" /><span><b>{product.name}</b><small>{product.brand} · S/ {product.price.toFixed(2)}</small></span></Link>)}</div>}{query.trim() && results.length === 0 && <div className="search-results empty-result">No encontramos productos para “{query}”.</div>}</div>
+      <div className="search"><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Busca licencias de Office, Windows, Canva..." aria-label="Buscar productos" /><button aria-label="Buscar">⌕</button>{results.length > 0 && <div className="search-results">{results.map((product) => <Link key={product.id} to={`/producto/${product.id}`} onClick={() => setQuery('')}><img src={product.image} alt="" /><span><b>{product.name}</b><small>{product.brand} · S/ {product.price.toFixed(2)}</small></span></Link>)}</div>}{query.trim() && results.length === 0 && <div className="search-results empty-result">No encontramos productos para “{query}”.</div>}</div>
       <div className="header-actions"><button className="theme-toggle" onClick={() => setDarkMode(!darkMode)} aria-label={darkMode ? 'Activar tema claro' : 'Activar tema oscuro'} title={darkMode ? 'Tema claro' : 'Tema oscuro'}>{darkMode ? '☀' : '☾'}</button><Link key={lastAdded?.key || 'cart'} className={lastAdded ? 'cart-link cart-link-bump' : 'cart-link'} to="/carrito">🛒 <b>Carrito ({count})</b></Link></div>
       <button className="theme-toggle mobile-theme" onClick={() => setDarkMode(!darkMode)} aria-label={darkMode ? 'Activar tema claro' : 'Activar tema oscuro'}>{darkMode ? '☀' : '☾'}</button>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Abrir menú">☰</button>
@@ -59,13 +59,12 @@ function Header() {
             <Link className="mega-view-all" to="/tienda#licencias">Ver todas las licencias →</Link>
             <Link to="/tienda#licencias">Microsoft 365 y Office</Link>
             <Link to="/tienda#licencias">Windows</Link>
-            <Link to="/tienda#licencias">Autodesk</Link>
-            <Link to="/tienda#licencias">Antivirus y seguridad</Link>
           </section>
           <section>
-            <p>PRODUCTOS FÍSICOS</p>
-            <Link className="mega-view-all" to="/tienda#accesorios">Ver todos los productos →</Link>
-            {accessoryCategories.map((category) => <Link key={category.id} to={`/tienda#${category.id}`}>{category.label}</Link>)}
+            <p>MÁS LICENCIAS</p>
+            <Link to="/tienda#licencias">Canva Pro</Link>
+            <Link to="/tienda#licencias">CapCut Pro</Link>
+            <Link to="/tienda#licencias">Gemini Pro</Link>
           </section>
           <aside className="mega-support">
             <span>Servicio técnico</span><strong>¿Tu equipo necesita ayuda?</strong><p>Reparamos laptops, computadoras e impresoras.</p>
@@ -77,11 +76,7 @@ function Header() {
         <p>Explora por categoría</p>
         <div>
           <Link to="/tienda#licencias" onClick={() => setOpen(false)}><i>▣</i> Licencias</Link>
-          <Link to="/tienda#teclados" onClick={() => setOpen(false)}><i>⌨</i> Teclados</Link>
-          <Link to="/tienda#mouse" onClick={() => setOpen(false)}><i>◉</i> Mouse</Link>
-          <Link to="/tienda#audio" onClick={() => setOpen(false)}><i>◖</i> Audífonos</Link>
-          <Link to="/tienda#impresoras" onClick={() => setOpen(false)}><i>▤</i> Impresoras</Link>
-          <Link to="/tienda#cables-conectividad" onClick={() => setOpen(false)}><i>⌁</i> Cables y conexión</Link>
+          <Link to="/soporte" onClick={() => setOpen(false)}><i>☏</i> Soporte</Link>
         </div>
       </div>
       <NavLink end to="/" onClick={() => setOpen(false)}>Inicio</NavLink><NavLink to="/tienda" onClick={() => setOpen(false)}>Tienda</NavLink><NavLink to="/servicios" onClick={() => setOpen(false)}>Servicio técnico</NavLink><NavLink to="/soporte" onClick={() => setOpen(false)}>Ayuda al cliente</NavLink>
@@ -119,15 +114,15 @@ function FloatingCartBubble({ path }) {
 }
 function SectionTitle({ eyebrow, title, text }) { return <div className="section-title"><p className="eyebrow">{eyebrow}</p><h2>{title}</h2>{text && <p>{text}</p>}</div> }
 
-const showcaseProducts = [...licenseProducts, ...accessoryProducts]
+const showcaseProducts = licenseProducts
 function ProductShowcase() {
   const loopedProducts = [...showcaseProducts, ...showcaseProducts]
   return <section className="product-showcase" aria-label="Productos en exhibición"><div className="product-showcase-heading"><span>EXPLORA EL CATÁLOGO</span><p>Desliza o pasa el cursor sobre un producto para revisarlo.</p></div><div className="product-showcase-viewport"><div className="product-showcase-track">{loopedProducts.map((product, index) => <Link className="showcase-product" key={`${product.id}-${index}`} to={`/producto/${product.id}`} tabIndex={index >= showcaseProducts.length ? -1 : undefined}><img src={product.image} alt={index < showcaseProducts.length ? product.name : ''} /><span>{product.brand}</span><b>{product.name}</b><strong>S/ {product.price.toFixed(2)}</strong></Link>)}</div></div></section>
 }
 
 const heroSlides = [
-  { eyebrow: 'OFERTAS TEC+', title: 'Potencia tu día<br />con tecnología.', copy: 'Accesorios y componentes para hacer más en cada jornada.', image: '/hero/potencia-tecnologia.png', action: '/tienda', label: 'Ver ofertas' },
-  { eyebrow: 'LICENCIAS DIGITALES', title: 'Software original<br />para cada proyecto.', copy: 'Office, Windows, Autodesk y seguridad para tu equipo.', image: '/hero/software-original.png', action: '/tienda', label: 'Ver licencias' },
+  { eyebrow: 'OFERTAS TEC+', title: 'Potencia tu día<br />con tecnología.', copy: 'Licencias digitales originales para trabajar y crear sin límites.', image: '/hero/potencia-tecnologia.png', action: '/tienda', label: 'Ver ofertas' },
+  { eyebrow: 'LICENCIAS DIGITALES', title: 'Software original<br />para cada proyecto.', copy: 'Office, Windows, Microsoft 365, Canva, CapCut y Gemini para tu equipo.', image: '/hero/software-original.png', action: '/tienda', label: 'Ver licencias' },
   { eyebrow: 'SERVICIO TÉCNICO', title: 'Tu equipo en<br />buenas manos.', copy: 'Diagnóstico y reparación para laptops, computadoras e impresoras.', image: '/hero/servicio-tecnico.png', action: '/soporte', label: 'Solicitar servicio' },
 ]
 
@@ -140,7 +135,7 @@ function HeroSlider() {
 
 function Home() { return <>
   <HeroSlider />
-  <section className="quick-categories"><Link to="/tienda"><i>⌨</i><span>Accesorios</span><small>Para tu setup</small></Link><Link to="/tienda"><i>▣</i><span>Componentes</span><small>Mejora tu PC</small></Link><Link to="/servicios"><i>▰</i><span>Servicio técnico</span><small>Reparamos tu equipo</small></Link><Link to="/soporte"><i>☏</i><span>Soporte</span><small>Estamos para ayudarte</small></Link></section>
+  <section className="quick-categories"><Link to="/tienda"><i>▣</i><span>Licencias</span><small>Office, Windows y más</small></Link><Link to="/servicios"><i>▰</i><span>Servicio técnico</span><small>Reparamos tu equipo</small></Link><Link to="/soporte"><i>☏</i><span>Soporte</span><small>Estamos para ayudarte</small></Link></section>
   <SectionTitle eyebrow="NOVEDADES TEC+" title="Productos y soluciones destacadas" text="Encuentra tecnología seleccionada y atención experta." />
   <ProductShowcase />
   <section className="offer"><div><p className="eyebrow">SERVICIO TÉCNICO ESPECIALIZADO</p><h2>¿Tu computadora va lenta<br />o dejó de funcionar?</h2><p>La revisamos, diagnosticamos y dejamos lista para que vuelvas a trabajar sin interrupciones.</p><Link className="button green" to="/soporte">Agendar diagnóstico</Link></div><div className="offer-art"><span>⚙</span><b>REPARACIÓN<br />CON GARANTÍA</b></div></section>
@@ -212,6 +207,6 @@ function Auth({ register = false }) {
   return <section className="auth"><div className="auth-copy"><Link className="logo" to="/">TEC<span>+</span><small>SOLUCIONES DIGITALES</small></Link><h1>{register ? 'Crea tu cuenta.' : 'Qué bueno verte de nuevo.'}</h1><p>{register ? 'Regístrate para seguir tus compras y solicitudes técnicas.' : 'Ingresa para revisar tus solicitudes y compras.'}</p></div><form className="form auth-form" onSubmit={submit}><h2>{register ? 'Registrarme' : 'Iniciar sesión'}</h2>{register && <label>Nombre completo<input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Tu nombre" /></label>}<label>Correo electrónico<input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="correo@ejemplo.com" /></label><label>Contraseña<input required minLength="8" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Mínimo 8 caracteres" /></label>{message && <p className="form-message">{message}</p>}<button className="button" disabled={sending}>{sending ? 'Procesando...' : register ? 'Crear mi cuenta' : 'Ingresar'}</button><p>{register ? '¿Ya tienes una cuenta?' : '¿Aún no tienes cuenta?'} <Link to={register ? '/login' : '/registro'}>{register ? 'Ingresa' : 'Regístrate'}</Link></p></form></section>
 }
 */
-function Footer() { return <footer><div><img className="footer-logo" src={anavegarLogo} alt="Anavegar Soluciones" /><p>Accesorios, componentes y servicio técnico de confianza.</p></div><div><b>Compra segura</b><p>Productos con garantía y comprobante de pago.</p></div><div><b>Atención directa</b><p>Lunes a sábado · 9 a.m. – 6 p.m.</p></div><div><b>Visítanos</b><p>📍 Paucarpata, Arequipa, Perú</p><p><a href="https://maps.app.goo.gl/C9uQXsM2Hbm4yjjM6" target="_blank" rel="noreferrer">Ver ubicación en Maps</a></p></div><div className="footer-social" aria-label="Síguenos en redes sociales"><span>Encuéntranos en</span><div>{socialIcons.map((social) => social.href ? <a key={social.name} className="social-icon footer-social-icon" href={social.href} target="_blank" rel="noreferrer" title={social.name} aria-label={social.name}><SocialLogo brand={social.className} /></a> : <i key={social.name} className="social-icon footer-social-icon" title={social.name} aria-label={social.name}><SocialLogo brand={social.className} /></i>)}<a className="footer-whatsapp" href="https://wa.me/51967327944" target="_blank" rel="noreferrer"><i className="whatsapp-logo"><WhatsAppLogo /></i>WhatsApp: 967 327 944</a></div></div></footer> }
+function Footer() { return <footer><div><img className="footer-logo" src={anavegarLogo} alt="Anavegar Soluciones" /><p>Licencias digitales y servicio técnico de confianza.</p></div><div><b>Compra segura</b><p>Licencias originales y pago seguro con Yape.</p></div><div><b>Atención directa</b><p>Lunes a sábado · 9 a.m. – 6 p.m.</p></div><div><b>Visítanos</b><p>📍 Paucarpata, Arequipa, Perú</p><p><a href="https://maps.app.goo.gl/C9uQXsM2Hbm4yjjM6" target="_blank" rel="noreferrer">Ver ubicación en Maps</a></p></div><div className="footer-social" aria-label="Síguenos en redes sociales"><span>Encuéntranos en</span><div>{socialIcons.map((social) => social.href ? <a key={social.name} className="social-icon footer-social-icon" href={social.href} target="_blank" rel="noreferrer" title={social.name} aria-label={social.name}><SocialLogo brand={social.className} /></a> : <i key={social.name} className="social-icon footer-social-icon" title={social.name} aria-label={social.name}><SocialLogo brand={social.className} /></i>)}<a className="footer-whatsapp" href="https://wa.me/51967327944" target="_blank" rel="noreferrer"><i className="whatsapp-logo"><WhatsAppLogo /></i>WhatsApp: 967 327 944</a></div></div></footer> }
 function App() { const path = usePath(); return <CartProvider><Header /><FloatingCartBubble path={path} /><main><div className="page-transition" key={path}><Routes><Route path="/" element={<Home />} /><Route path="/servicios" element={<Services />} /><Route path="/tienda" element={<Store />} /><Route path="/producto/:id" element={<ProductDetail />} /><Route path="/carrito" element={<Cart />} /><Route path="/checkout" element={<Checkout />} /><Route path="/soporte" element={<SupportWhatsApp />} /></Routes></div></main><Footer /></CartProvider> }
 export default App
