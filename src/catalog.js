@@ -24,6 +24,8 @@ const license = ({ id, name, brand, duration, devices, delivery, activation, pri
   longDescription: notes || `Licencia digital ${brand} con entrega coordinada por Anavegar Soluciones.`,
 })
 
+export const bestSellerIds = ['OFF21-PHONE', 'WIN11-RET', 'M365-ACCOUNT', 'CAN-EDU-12M', 'GEM-INV-18M', 'CAP-TEAM-01M']
+
 export const licenseProducts = [
   license({ id: 'OFF16-PHONE', name: 'Office Retail Professional Plus 2016 — Activación por teléfono', brand: 'Office', duration: 'Permanente', devices: '1 dispositivo', delivery: 'Key Phone', activation: 'Por teléfono', price: 16, image: images.office2016, notes: 'Compatible con Windows. La activación se realiza por teléfono.' }),
   license({ id: 'OFF19-PHONE', name: 'Office Retail Professional Plus 2019 — Activación por teléfono', brand: 'Office', duration: 'Permanente', devices: '1 dispositivo', delivery: 'Key Phone', activation: 'Por teléfono', price: 18, image: images.office2019, notes: 'Compatible con Windows. La activación se realiza por teléfono.' }),

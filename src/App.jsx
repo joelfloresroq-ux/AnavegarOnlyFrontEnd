@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react'
+import Cover from './Cover.jsx'
 import { Link, NavLink, Route, Routes, usePath } from './router.jsx'
 import { Store, Cart, Checkout } from './Shop.jsx'
 import { CartProvider, useCart } from './cart.jsx'
 const anavegarLogo = '/brand/anavegar-logo-transparent.png'
 import { licenseProducts } from './catalog.js'
 import ProductDetail from './ProductDetail.jsx'
+import Home from './Home.jsx'
+import { whatsappLink } from './whatsapp.js'
 import './App.css'
 import './session.css'
+import './polish.css'
+import { useReveal } from './useReveal.js'
 
 const services = [
   { icon: '▰', image: '/services/reparacion-laptops.jpg', title: 'Reparación de laptops', text: 'Pantallas, batería, teclado, software y optimización.' },
@@ -19,7 +24,6 @@ const socialIcons = [
   { name: 'Instagram', className: 'instagram' },
   { name: 'X / Twitter', className: 'twitter' },
 ]
-const serviceBrands = ['Epson', 'Canon', 'Brother', 'HP', 'Acer', 'Lenovo', 'AMD', 'Intel', 'NVIDIA']
 
 function SocialLogo({ brand }) {
   if (brand === 'facebook') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v6h4v-6h3.3l.7-4H13V9c0-.7.3-1 1-1Z" /></svg>
@@ -43,9 +47,10 @@ function Header() {
     localStorage.setItem('tec_theme', darkMode ? 'dark' : 'light')
   }, [darkMode])
   return <>
+    <div className="top-note"><span>◎ Paga con Yape</span><span>⚡ Entrega por WhatsApp</span><span>Lun–Sáb · 9 a.m. – 6 p.m.</span></div>
     <header className="header">
       <Link className="brand-logo" to="/"><img src={anavegarLogo} alt="Anavegar Soluciones" /></Link>
-      <div className="search"><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Busca licencias de Office, Windows, Canva..." aria-label="Buscar productos" /><button aria-label="Buscar">⌕</button>{results.length > 0 && <div className="search-results">{results.map((product) => <Link key={product.id} to={`/producto/${product.id}`} onClick={() => setQuery('')}><img src={product.image} alt="" /><span><b>{product.name}</b><small>{product.brand} · S/ {product.price.toFixed(2)}</small></span></Link>)}</div>}{query.trim() && results.length === 0 && <div className="search-results empty-result">No encontramos productos para “{query}”.</div>}</div>
+      <div className="search"><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Busca licencias de Office, Windows, Canva..." aria-label="Buscar productos" /><button aria-label="Buscar">⌕</button>{results.length > 0 && <div className="search-results">{results.map((product) => <Link key={product.id} to={`/producto/${product.id}`} onClick={() => setQuery('')}><Cover src={product.image} alt="" /><span><b>{product.name}</b><small>{product.brand} · S/ {product.price.toFixed(2)}</small></span></Link>)}</div>}{query.trim() && results.length === 0 && <div className="search-results empty-result">No encontramos productos para “{query}”.</div>}</div>
       <div className="header-actions"><button className="theme-toggle" onClick={() => setDarkMode(!darkMode)} aria-label={darkMode ? 'Activar tema claro' : 'Activar tema oscuro'} title={darkMode ? 'Tema claro' : 'Tema oscuro'}>{darkMode ? '☀' : '☾'}</button><Link key={lastAdded?.key || 'cart'} className={lastAdded ? 'cart-link cart-link-bump' : 'cart-link'} to="/carrito">🛒 <b>Carrito ({count})</b></Link></div>
       <button className="theme-toggle mobile-theme" onClick={() => setDarkMode(!darkMode)} aria-label={darkMode ? 'Activar tema claro' : 'Activar tema oscuro'}>{darkMode ? '☀' : '☾'}</button>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Abrir menú">☰</button>
@@ -112,39 +117,8 @@ function FloatingCartBubble({ path }) {
   if (!awayFromHeader || count === 0 || ['/carrito', '/checkout'].includes(path)) return null
   return <Link key={lastAdded?.key || 'global-floating-cart'} className={lastAdded ? 'floating-cart floating-cart-bubble floating-cart-bump' : 'floating-cart floating-cart-bubble'} to="/carrito" aria-label={`Ver carrito: ${count} productos, total S/ ${total.toFixed(2)}`}><span className="floating-cart-icon" aria-hidden="true">🛒</span><span><small>Tu carrito</small><b>{count} {count === 1 ? 'producto' : 'productos'} · S/ {total.toFixed(2)}</b></span><i aria-hidden="true">→</i></Link>
 }
-function SectionTitle({ eyebrow, title, text }) { return <div className="section-title"><p className="eyebrow">{eyebrow}</p><h2>{title}</h2>{text && <p>{text}</p>}</div> }
 
-const showcaseProducts = licenseProducts
-function ProductShowcase() {
-  const loopedProducts = [...showcaseProducts, ...showcaseProducts]
-  return <section className="product-showcase" aria-label="Productos en exhibición"><div className="product-showcase-heading"><span>EXPLORA EL CATÁLOGO</span><p>Desliza o pasa el cursor sobre un producto para revisarlo.</p></div><div className="product-showcase-viewport"><div className="product-showcase-track">{loopedProducts.map((product, index) => <Link className="showcase-product" key={`${product.id}-${index}`} to={`/producto/${product.id}`} tabIndex={index >= showcaseProducts.length ? -1 : undefined}><img src={product.image} alt={index < showcaseProducts.length ? product.name : ''} /><span>{product.brand}</span><b>{product.name}</b><strong>S/ {product.price.toFixed(2)}</strong></Link>)}</div></div></section>
-}
-
-const heroSlides = [
-  { eyebrow: 'OFERTAS TEC+', title: 'Potencia tu día<br />con tecnología.', copy: 'Licencias digitales originales para trabajar y crear sin límites.', image: '/hero/potencia-tecnologia.png', action: '/tienda', label: 'Ver ofertas' },
-  { eyebrow: 'LICENCIAS DIGITALES', title: 'Software original<br />para cada proyecto.', copy: 'Office, Windows, Microsoft 365, Canva, CapCut y Gemini para tu equipo.', image: '/hero/software-original.png', action: '/tienda', label: 'Ver licencias' },
-  { eyebrow: 'SERVICIO TÉCNICO', title: 'Tu equipo en<br />buenas manos.', copy: 'Diagnóstico y reparación para laptops, computadoras e impresoras.', image: '/hero/servicio-tecnico.png', action: '/soporte', label: 'Solicitar servicio' },
-]
-
-function HeroSlider() {
-  const [active, setActive] = useState(0)
-  useEffect(() => { const interval = window.setInterval(() => setActive((current) => (current + 1) % heroSlides.length), 5500); return () => window.clearInterval(interval) }, [])
-  const slide = heroSlides[active]
-  return <section className="store-hero hero-slider"><div className="hero-content hero-fade" key={slide.title}><p className="eyebrow">{slide.eyebrow}</p><h1 dangerouslySetInnerHTML={{ __html: slide.title.replace('<br />', '<br />') }} /><p>{slide.copy}</p><div><Link className="button green" to={slide.action}>{slide.label}</Link><Link className="button hero-outline" to="/soporte">Solicitar servicio</Link></div></div><div className="hero-slide-image"><img src={slide.image} alt="Tecnología Anavegar" /><span className="hero-glow" /></div><div className="slider-controls"><button onClick={() => setActive((active + heroSlides.length - 1) % heroSlides.length)} aria-label="Oferta anterior">←</button>{heroSlides.map((item, index) => <button className={index === active ? 'slider-dot active' : 'slider-dot'} key={item.eyebrow} onClick={() => setActive(index)} aria-label={`Ver ${item.eyebrow}`} />)}<button onClick={() => setActive((active + 1) % heroSlides.length)} aria-label="Oferta siguiente">→</button></div></section>
-}
-
-function Home() { return <>
-  <HeroSlider />
-  <section className="quick-categories"><Link to="/tienda"><i>▣</i><span>Licencias</span><small>Office, Windows y más</small></Link><Link to="/servicios"><i>▰</i><span>Servicio técnico</span><small>Reparamos tu equipo</small></Link><Link to="/soporte"><i>☏</i><span>Soporte</span><small>Estamos para ayudarte</small></Link></section>
-  <SectionTitle eyebrow="NOVEDADES TEC+" title="Productos y soluciones destacadas" text="Encuentra tecnología seleccionada y atención experta." />
-  <ProductShowcase />
-  <section className="offer"><div><p className="eyebrow">SERVICIO TÉCNICO ESPECIALIZADO</p><h2>¿Tu computadora va lenta<br />o dejó de funcionar?</h2><p>La revisamos, diagnosticamos y dejamos lista para que vuelvas a trabajar sin interrupciones.</p><Link className="button green" to="/soporte">Agendar diagnóstico</Link></div><div className="offer-art"><span>⚙</span><b>REPARACIÓN<br />CON GARANTÍA</b></div></section>
-  <SectionTitle eyebrow="SOPORTE MULTIMARCA" title="Compras y soporte con confianza" text="Trabajamos con equipos, componentes y periféricos de las principales marcas." />
-  <section className="benefits"><article><i>✓</i><h3>Garantía real</h3><p>Productos y reparaciones respaldadas.</p></article><article><i>⚡</i><h3>Atención rápida</h3><p>Respuesta clara y seguimiento a tu caso.</p></article><article><i>▣</i><h3>Compra segura</h3><p>Compra con confianza y comprobante.</p></article><article><i>☏</i><h3>Soporte cercano</h3><p>Te orientamos antes y después de comprar.</p></article></section>
-  <p className="brands-caption">Marcas que atendemos en servicio técnico</p>
-  <section className="service-brands" aria-label="Marcas atendidas por Anavegar Soluciones">{serviceBrands.map((brand) => <article key={brand}><img src={`/brands/${brand.toLowerCase()}.svg`} alt={brand} /></article>)}</section>
-</> }
-function Services() { return <><SectionTitle eyebrow="SERVICIO TÉCNICO" title="Recuperamos tu tecnología" text="Diagnóstico honesto, soluciones duraderas y comunicación clara." /><section className="service-grid services-page">{services.map(s => <article className="service-card" key={s.title}><div className="service-card-image"><img src={s.image} alt={'Servicio de ' + s.title.toLowerCase()} /></div><i>{s.icon}</i><h3>{s.title}</h3><p>{s.text}</p><ul><li>Diagnóstico técnico</li><li>Garantía de servicio</li><li>Atención personalizada</li></ul><Link to="/soporte">Solicitar atención →</Link></article>)}</section></> }
+function Services() { return <><section className="service-banner"><img src="/hero/servicio-tecnico.png" alt="" /><div><p className="eyebrow">SERVICIO TÉCNICO EN AREQUIPA</p><h1>Recuperamos tu tecnología</h1><p>Diagnóstico honesto, soluciones duraderas y comunicación clara.</p><div className="hm-cta"><Link className="button green" to="/soporte">Solicitar diagnóstico</Link><a className="button hm-wa" href={whatsappLink('Hola, necesito servicio técnico.')} target="_blank" rel="noreferrer">💬 Escribir por WhatsApp</a></div></div></section><section className="service-grid services-page">{services.map(s => <article className="service-card" key={s.title}><div className="service-card-image"><img src={s.image} alt={'Servicio de ' + s.title.toLowerCase()} /></div><i>{s.icon}</i><h3>{s.title}</h3><p>{s.text}</p><ul><li>Diagnóstico técnico</li><li>Garantía de servicio</li><li>Atención personalizada</li></ul><Link to="/soporte">Solicitar atención →</Link></article>)}</section></> }
 
 function SupportWhatsApp() {
   const [form, setForm] = useState({ name: '', phone: '', equipment: 'Laptop', brand: '', model: '', issue: '', details: '' })
@@ -207,6 +181,7 @@ function Auth({ register = false }) {
   return <section className="auth"><div className="auth-copy"><Link className="logo" to="/">TEC<span>+</span><small>SOLUCIONES DIGITALES</small></Link><h1>{register ? 'Crea tu cuenta.' : 'Qué bueno verte de nuevo.'}</h1><p>{register ? 'Regístrate para seguir tus compras y solicitudes técnicas.' : 'Ingresa para revisar tus solicitudes y compras.'}</p></div><form className="form auth-form" onSubmit={submit}><h2>{register ? 'Registrarme' : 'Iniciar sesión'}</h2>{register && <label>Nombre completo<input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Tu nombre" /></label>}<label>Correo electrónico<input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="correo@ejemplo.com" /></label><label>Contraseña<input required minLength="8" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} placeholder="Mínimo 8 caracteres" /></label>{message && <p className="form-message">{message}</p>}<button className="button" disabled={sending}>{sending ? 'Procesando...' : register ? 'Crear mi cuenta' : 'Ingresar'}</button><p>{register ? '¿Ya tienes una cuenta?' : '¿Aún no tienes cuenta?'} <Link to={register ? '/login' : '/registro'}>{register ? 'Ingresa' : 'Regístrate'}</Link></p></form></section>
 }
 */
+function WhatsAppFloat() { return <a className="wa-float" href={whatsappLink('Hola, tengo una consulta sobre Anavegar Soluciones.')} target="_blank" rel="noreferrer" aria-label="Escríbenos por WhatsApp"><WhatsAppLogo /><span>¿Dudas? Escríbenos</span></a> }
 function Footer() { return <footer><div><img className="footer-logo" src={anavegarLogo} alt="Anavegar Soluciones" /><p>Licencias digitales y servicio técnico de confianza.</p></div><div><b>Compra segura</b><p>Licencias originales y pago seguro con Yape.</p></div><div><b>Atención directa</b><p>Lunes a sábado · 9 a.m. – 6 p.m.</p></div><div><b>Visítanos</b><p>📍 Paucarpata, Arequipa, Perú</p><p><a href="https://maps.app.goo.gl/C9uQXsM2Hbm4yjjM6" target="_blank" rel="noreferrer">Ver ubicación en Maps</a></p></div><div className="footer-social" aria-label="Síguenos en redes sociales"><span>Encuéntranos en</span><div>{socialIcons.map((social) => social.href ? <a key={social.name} className="social-icon footer-social-icon" href={social.href} target="_blank" rel="noreferrer" title={social.name} aria-label={social.name}><SocialLogo brand={social.className} /></a> : <i key={social.name} className="social-icon footer-social-icon" title={social.name} aria-label={social.name}><SocialLogo brand={social.className} /></i>)}<a className="footer-whatsapp" href="https://wa.me/51967327944" target="_blank" rel="noreferrer"><i className="whatsapp-logo"><WhatsAppLogo /></i>WhatsApp: 967 327 944</a></div></div></footer> }
-function App() { const path = usePath(); return <CartProvider><Header /><FloatingCartBubble path={path} /><main><div className="page-transition" key={path}><Routes><Route path="/" element={<Home />} /><Route path="/servicios" element={<Services />} /><Route path="/tienda" element={<Store />} /><Route path="/producto/:id" element={<ProductDetail />} /><Route path="/carrito" element={<Cart />} /><Route path="/checkout" element={<Checkout />} /><Route path="/soporte" element={<SupportWhatsApp />} /></Routes></div></main><Footer /></CartProvider> }
+function App() { const path = usePath(); useReveal('.service-card, .section-title, .support-copy, .form-section, .contact-card', path); return <CartProvider><Header /><FloatingCartBubble path={path} /><main><div className="page-transition" key={path}><Routes><Route path="/" element={<Home />} /><Route path="/servicios" element={<Services />} /><Route path="/tienda" element={<Store />} /><Route path="/producto/:id" element={<ProductDetail />} /><Route path="/carrito" element={<Cart />} /><Route path="/checkout" element={<Checkout />} /><Route path="/soporte" element={<SupportWhatsApp />} /></Routes></div></main><Footer /><WhatsAppFloat /></CartProvider> }
 export default App
