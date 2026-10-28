@@ -74,3 +74,51 @@ html[data-theme='dark'] .detail-gallery,html[data-theme='dark'] .detail-gallery 
 html[data-theme='dark'] .crumbs a,html[data-theme='dark'] .detail-info .eyebrow,html[data-theme='dark'] .detail-price strong,html[data-theme='dark'] .detail-ask{color:#6fd3e6}
 html[data-theme='dark'] .detail-ask{color:#5ee08f}
 html[data-theme='dark'] .related-card strong,html[data-theme='dark'] .cart-suggest span{color:#6fd3e6}
+
+/* ===== Modo oscuro: carrito, pedido, tienda, detalle y pie ===== */
+html[data-theme='dark'] .menu{color:#edf9fb}
+html[data-theme='dark'] .eyebrow{color:#6fd3e6}
+html[data-theme='dark'] .store-intro .eyebrow{color:#7fe3f5}
+html[data-theme='dark'] footer b,html[data-theme='dark'] footer strong{color:#edf9fb}
+/* Carrito */
+html[data-theme='dark'] .cart-row,html[data-theme='dark'] .order-summary,html[data-theme='dark'] .empty-cart,html[data-theme='dark'] .checkout-box{background:#192832;border-color:#304651;color:#edf9fb}
+html[data-theme='dark'] .cart-row h3,html[data-theme='dark'] .order-summary h2,html[data-theme='dark'] .order-summary h3,html[data-theme='dark'] .checkout-box h2,html[data-theme='dark'] .checkout-box h3,html[data-theme='dark'] .checkout-page h1,html[data-theme='dark'] .empty-cart p{color:#edf9fb}
+html[data-theme='dark'] .cart-row p,html[data-theme='dark'] .order-summary p,html[data-theme='dark'] .order-summary p span,html[data-theme='dark'] .checkout-box p{color:#b8cdd2}
+html[data-theme='dark'] .cart-row strong,html[data-theme='dark'] .cart-row>b,html[data-theme='dark'] .order-summary p b{color:#6fd3e6}
+html[data-theme='dark'] .quantity span{color:#edf9fb}
+html[data-theme='dark'] .quantity button{background:#203c49;border-color:#3c5a69;color:#edf9fb}
+html[data-theme='dark'] .quantity button:hover{background:#2a4d5e}
+html[data-theme='dark'] .cart-remove{color:#ff9b9b}
+html[data-theme='dark'] .order-summary hr{border-color:#304651}
+html[data-theme='dark'] .flow-steps b{background:#26404c;color:#edf9fb}
+html[data-theme='dark'] .flow-steps li.on b{background:#6fd3e6;color:#0b2540}
+html[data-theme='dark'] .cart-note{color:#9fe0b8}
+html[data-theme='dark'] .yape-amount b{color:#e0b4ff}
+html[data-theme='dark'] .yape-payment .yape-amount{color:#edf9fb}
+html[data-theme='dark'] .yape-qr{border-color:#4b3a58}
+/* Pedido */
+html[data-theme='dark'] .payment-note,html[data-theme='dark'] .checkout-message{color:#6fd3e6!important}
+html[data-theme='dark'] .checkout-contact-form label{color:#edf9fb}
+html[data-theme='dark'] .checkout-contact-form input,html[data-theme='dark'] .form input,html[data-theme='dark'] .form select,html[data-theme='dark'] .form textarea{background:#101820;border:1px solid #3c5a69;color:#edf9fb}
+html[data-theme='dark'] .form input::placeholder,html[data-theme='dark'] .form textarea::placeholder{color:#8ba3ad}
+/* Tienda */
+html[data-theme='dark'] .store-filters,html[data-theme='dark'] .store-toolbar,html[data-theme='dark'] .shop-card{background:#192832;border-color:#304651}
+html[data-theme='dark'] .store-filters summary,html[data-theme='dark'] .store-filters label,html[data-theme='dark'] .filter-title h2,html[data-theme='dark'] .store-toolbar h2,html[data-theme='dark'] .store-toolbar label,html[data-theme='dark'] .shop-card h3,html[data-theme='dark'] .shop-card h3 a{color:#edf9fb}
+html[data-theme='dark'] .shop-card strong,html[data-theme='dark'] .filter-title button{color:#6fd3e6}
+html[data-theme='dark'] .shop-card small,html[data-theme='dark'] .shop-card ul,html[data-theme='dark'] .shop-card>p{color:#b8cdd2}
+html[data-theme='dark'] .store-toolbar select{background:#101820;color:#edf9fb;border-color:#3c5a69}
+html[data-theme='dark'] .shop-card button:not(.favorite){background:#203c49;color:#edf9fb;border-color:#3c5a69}
+html[data-theme='dark'] .pbadge{background:rgba(16,24,32,.88);color:#cfeff6}html[data-theme='dark'] .pbadge.hot{background:#6fd3e6;color:#0b2540}html[data-theme='dark'] .pbadge.soft{background:#203c49;color:#9fe0f0}
+/* Detalle */
+html[data-theme='dark'] .detail-stock{color:#5ee08f}
+html[data-theme='dark'] .product-detail,html[data-theme='dark'] .detail-info{background:#192832;border-color:#304651}
+html[data-theme='dark'] .detail-info h1,html[data-theme='dark'] .detail-product-copy h2,html[data-theme='dark'] .detail-specs h2,html[data-theme='dark'] .detail-tech-specs h2{color:#edf9fb}
+html[data-theme='dark'] .detail-description,html[data-theme='dark'] .detail-product-copy p,html[data-theme='dark'] .detail-specs ul,html[data-theme='dark'] .detail-tech-specs p{color:#b8cdd2}
+html[data-theme='dark'] .detail-actions .add-to-cart-button,html[data-theme='dark'] .detail-cart{background:#203c49;color:#edf9fb;border-color:#3c5a69}
+html[data-theme='dark'] .related-card b{color:#edf9fb}
+/* Servicios y soporte */
+html[data-theme='dark'] .service-card,html[data-theme='dark'] .support-form,html[data-theme='dark'] .contact-card{background:#192832;border-color:#304651;color:#edf9fb}
+html[data-theme='dark'] .service-card h3,html[data-theme='dark'] .support-form h2,html[data-theme='dark'] .support-form label,html[data-theme='dark'] .support h1,html[data-theme='dark'] .contact-card b{color:#edf9fb}
+html[data-theme='dark'] .service-card p,html[data-theme='dark'] .service-card li,html[data-theme='dark'] .support-form p,html[data-theme='dark'] .contact-card span,html[data-theme='dark'] .support-steps li{color:#b8cdd2}
+html[data-theme='dark'] .service-card>a{color:#6fd3e6}
+html[data-theme='dark'] .service-card>i{color:#6fd3e6}
