@@ -13,9 +13,9 @@ const brandTiles = [
   { brand: 'Office', label: 'Office', note: '2016, 2019, 2021 y 2024', image: '/catalog/covers/office-2021.svg' },
   { brand: 'Windows', label: 'Windows', note: '10 y 11 Pro', image: '/catalog/covers/windows-11.svg' },
   { brand: 'Microsoft 365', label: 'Microsoft 365', note: 'Hasta 5 dispositivos', image: '/catalog/covers/microsoft-365.svg' },
-  { brand: 'Canva', label: 'Canva Pro', note: 'Desde 1 mes', image: '/catalog/covers/canva.svg' },
+  { brand: 'Canva', label: 'Canva Pro', note: 'Elige tu duración', image: '/catalog/covers/canva.svg' },
   { brand: 'CapCut', label: 'CapCut Pro', note: 'Edición de video', image: '/catalog/covers/capcut-1m.svg' },
-  { brand: 'Gemini', label: 'Gemini Pro', note: '18 meses', image: '/catalog/covers/gemini-18m.svg' },
+  { brand: 'Gemini', label: 'Gemini Pro', note: 'Invitación o activación directa', image: '/catalog/covers/gemini-18m.svg' },
 ]
 const trust = [
   { icon: '✓', title: 'Licencias originales', text: 'Software legítimo para tu equipo.' },
