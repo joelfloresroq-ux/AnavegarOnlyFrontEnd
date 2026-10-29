@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="CAPCUT 1 MES">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-label="CAPCUT LICENCIA DIGITAL">
 <defs>
 <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef2f5"/><stop offset="1" stop-color="#d3dbe2"/></linearGradient>
 <radialGradient id="gl" cx=".5" cy=".42" r=".5"><stop offset="0" stop-color="#ffffff" stop-opacity="0.9"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
@@ -18,5 +18,5 @@
 <rect x="44" y="44" rx="26" width="172" height="52" fill="#ffffff" opacity="0.95"/>
 <text x="70" y="79" font-size="24" letter-spacing="2.4" fill="#1f2a37">CAPCUT</text>
 <rect x="400" y="792" rx="42" width="400" height="84" fill="#1f2a37" filter="url(#ms)"/>
-<text x="600" y="846" text-anchor="middle" font-size="34" letter-spacing="2" fill="#fff">1 MES</text>
+<text x="600" y="846" text-anchor="middle" font-size="30" letter-spacing="1.5" fill="#fff">LICENCIA DIGITAL</text>
 </g></svg>

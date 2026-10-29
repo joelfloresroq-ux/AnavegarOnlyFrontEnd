@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
 import Cover from './Cover.jsx'
 import { Link } from './router.jsx'
-import { licenseProducts, bestSellerIds } from './catalog.js'
-import { AddToCartButton } from './PurchaseGate.jsx'
+import { licenseProducts, bestSellerIds, priceLabel } from './catalog.js'
+import { ProductAction } from './PurchaseGate.jsx'
 import { whatsappLink } from './whatsapp.js'
 import './home.css'
 
-const money = (value) => `S/ ${value.toFixed(2)}`
 const byId = (id) => licenseProducts.find((product) => product.id === id)
 
 const bestSellers = bestSellerIds.map(byId).filter(Boolean)
@@ -14,7 +13,7 @@ const brandTiles = [
   { brand: 'Office', label: 'Office', note: '2016, 2019, 2021 y 2024', image: '/catalog/covers/office-2021.svg' },
   { brand: 'Windows', label: 'Windows', note: '10 y 11 Pro', image: '/catalog/covers/windows-11.svg' },
   { brand: 'Microsoft 365', label: 'Microsoft 365', note: 'Hasta 5 dispositivos', image: '/catalog/covers/microsoft-365.svg' },
-  { brand: 'Canva', label: 'Canva Pro', note: 'Desde 1 mes', image: '/catalog/covers/canva-12m.svg' },
+  { brand: 'Canva', label: 'Canva Pro', note: 'Desde 1 mes', image: '/catalog/covers/canva.svg' },
   { brand: 'CapCut', label: 'CapCut Pro', note: 'Edición de video', image: '/catalog/covers/capcut-1m.svg' },
   { brand: 'Gemini', label: 'Gemini Pro', note: '18 meses', image: '/catalog/covers/gemini-18m.svg' },
 ]
@@ -67,7 +66,7 @@ export default function Home() {
       <div className="hm-hero-art" aria-hidden="true">
         <Cover className="art-a" src="/catalog/covers/office-2021.svg" alt="" />
         <Cover className="art-b" src="/catalog/covers/windows-11.svg" alt="" />
-        <Cover className="art-c" src="/catalog/covers/canva-12m.svg" alt="" />
+        <Cover className="art-c" src="/catalog/covers/canva.svg" alt="" />
       </div>
     </section>
 
@@ -79,8 +78,8 @@ export default function Home() {
         <Link to={`/producto/${product.id}`}><Cover src={product.image} alt={product.name} loading="lazy" /></Link>
         <p>{product.brand}</p><h3><Link to={`/producto/${product.id}`}>{product.name}</Link></h3>
         <small>{product.description}</small>
-        <div className="hm-price"><strong>{money(product.price)}</strong><span>{product.details[4]}</span></div>
-        <AddToCartButton product={product} />
+        <div className="hm-price"><strong>{priceLabel(product)}</strong><span>{product.permanent ? 'Pago único' : product.renewable ? 'Renovable' : ''}</span></div>
+        <ProductAction product={product} />
       </article>)}</div>
       <p className="hm-more"><Link to="/tienda">Ver las {licenseProducts.length} licencias →</Link></p>
     </section>

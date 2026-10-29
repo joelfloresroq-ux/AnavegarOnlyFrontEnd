@@ -2,9 +2,9 @@ import { useState } from 'react'
 import Cover from './Cover.jsx'
 import { Link } from './router.jsx'
 import { useReveal } from './useReveal.js'
-import { licenseProducts, bestSellerIds } from './catalog.js'
+import { licenseProducts, bestSellerIds, priceLabel } from './catalog.js'
 import { useCart } from './cart.jsx'
-import { AddToCartButton } from './PurchaseGate.jsx'
+import { ProductAction } from './PurchaseGate.jsx'
 import './shop.css'
 import './whatsapp.css'
 import './store-layout.css'
@@ -12,7 +12,7 @@ import './polish.css'
 
 const money = (value) => `S/ ${value.toFixed(2)}`
 const whatsappNumber = (import.meta.env.VITE_WHATSAPP_NUMBER || '').replace(/\D/g, '')
-function Card({ product }) { const [favorite, setFavorite] = useState(false); return <article className="shop-card">{product.oldPrice && <span className="sale">Oferta</span>}<button className={favorite ? 'favorite active' : 'favorite'} type="button" aria-label={(favorite ? 'Quitar ' : 'Guardar ') + product.name} aria-pressed={favorite} onClick={() => setFavorite(!favorite)}>{favorite ? '♥' : '♡'}</button><div className="card-badges">{bestSellerIds.includes(product.id) && <span className="pbadge hot">Más vendida</span>}<span className="pbadge">{product.details[0].replace('Duración: ', '')}</span>{product.details[4] === 'Renovable' && <span className="pbadge soft">Renovable</span>}</div><Link to={`/producto/${product.id}`}><Cover className="shop-icon" src={product.image} alt={product.name} /></Link><p>{product.brand}</p><h3><Link to={`/producto/${product.id}`}>{product.name}</Link></h3><small>{product.description}</small><ul>{product.details.slice(0, 3).map((item) => <li key={item}>{item}</li>)}</ul><strong>{money(product.price)}</strong>{product.oldPrice && <del>{money(product.oldPrice)}</del>}<span className="product-availability">✓ Entrega digital</span><AddToCartButton product={product} /></article> }
+function Card({ product }) { const [favorite, setFavorite] = useState(false); return <article className="shop-card">{product.oldPrice && <span className="sale">Oferta</span>}<button className={favorite ? 'favorite active' : 'favorite'} type="button" aria-label={(favorite ? 'Quitar ' : 'Guardar ') + product.name} aria-pressed={favorite} onClick={() => setFavorite(!favorite)}>{favorite ? '♥' : '♡'}</button><div className="card-badges">{bestSellerIds.includes(product.id) && <span className="pbadge hot">Más vendida</span>}{product.permanent && <span className="pbadge">Permanente</span>}{product.renewable && <span className="pbadge soft">Renovable</span>}</div><Link to={`/producto/${product.id}`}><Cover className="shop-icon" src={product.image} alt={product.name} /></Link><p>{product.brand}</p><h3><Link to={`/producto/${product.id}`}>{product.name}</Link></h3><small>{product.description}</small><ul>{product.details.slice(0, 3).map((item) => <li key={item}>{item}</li>)}</ul><strong>{priceLabel(product)}</strong>{product.oldPrice && <del>{money(product.oldPrice)}</del>}<span className="product-availability">✓ Entrega digital</span><ProductAction product={product} /></article> }
 const allProducts = licenseProducts
 export function Store() {
   const [selectedBrands, setSelectedBrands] = useState([])

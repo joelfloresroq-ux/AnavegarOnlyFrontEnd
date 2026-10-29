@@ -9,22 +9,33 @@ const images = {
   microsoft365: '/catalog/covers/microsoft-365.svg',
   windows: '/catalog/covers/windows-11.svg',
   windows10: '/catalog/covers/windows-10.svg',
-  canva1: '/catalog/covers/canva-1m.svg',
-  canva3: '/catalog/covers/canva-3m.svg',
-  canva6: '/catalog/covers/canva-6m.svg',
-  canva12: '/catalog/covers/canva-12m.svg',
+  canva: '/catalog/covers/canva.svg',
   capcut: '/catalog/covers/capcut-1m.svg',
   gemini: '/catalog/covers/gemini-18m.svg',
 }
 
-const license = ({ id, name, brand, duration, devices, delivery, activation, price, image, renewable = false, notes }) => ({
-  id, name, brand, price, image, type: 'license',
-  description: `${duration} · Activación: ${activation || delivery}.`,
-  details: [`Duración: ${duration}`, devices, `Método de activación: ${activation || delivery}`, `Entrega: ${delivery}`, renewable ? 'Renovable' : 'No renovable'],
-  longDescription: notes || `Licencia digital ${brand} con entrega coordinada por Anavegar Soluciones.`,
-})
+// Los productos por tiempo (meses) no muestran la duración en las tarjetas de la tienda:
+// se elige en la página del producto cuando tiene variantes, o se lista en sus características.
+const license = ({ id, name, brand, duration, devices, delivery, activation, price, image, renewable = false, notes, variants }) => {
+  const permanent = !/mes/i.test(duration)
+  const method = activation || delivery
+  return {
+    id, name, brand, price, image, type: 'license', permanent, renewable, variants,
+    description: permanent ? `${duration} · Activación: ${method}.` : `Activación: ${method}.`,
+    details: permanent
+      ? [`Duración: ${duration}`, devices, `Método de activación: ${method}`, `Entrega: ${delivery}`]
+      : [devices, `Método de activación: ${method}`, `Entrega: ${delivery}`, ...(variants ? [] : [`Duración: ${duration}`])],
+    longDescription: notes || `Licencia digital ${brand} con entrega coordinada por Anavegar Soluciones.`,
+  }
+}
 
-export const bestSellerIds = ['OFF21-PHONE', 'WIN11-RET', 'M365-ACCOUNT', 'CAN-EDU-12M', 'GEM-INV-18M', 'CAP-TEAM-01M']
+// Texto de precio: "Desde" si el producto tiene varias duraciones.
+export const priceLabel = (product) => `${product.variants ? 'Desde ' : ''}S/ ${product.price.toFixed(2)}`
+// Producto listo para el carrito según la duración elegida.
+export const withVariant = (product, variant) => variant ? { ...product, id: variant.id, name: `${product.name} · ${variant.label}`, price: variant.price, variants: undefined } : product
+export const findProduct = (id) => licenseProducts.find((item) => item.id === id || item.variants?.some((variant) => variant.id === id))
+
+export const bestSellerIds = ['OFF21-PHONE', 'WIN11-RET', 'M365-ACCOUNT', 'CAN-EDU', 'GEM-INV-18M', 'CAP-TEAM-01M']
 
 export const licenseProducts = [
   license({ id: 'OFF16-PHONE', name: 'Office Retail Professional Plus 2016 — Activación por teléfono', brand: 'Office', duration: 'Permanente', devices: '1 dispositivo', delivery: 'Key Phone', activation: 'Por teléfono', price: 16, image: images.office2016, notes: 'Compatible con Windows. La activación se realiza por teléfono.' }),
@@ -38,10 +49,7 @@ export const licenseProducts = [
   license({ id: 'WIN10-OEM', name: 'Windows 10 Pro OEM', brand: 'Windows', duration: 'Permanente', devices: '1 PC', delivery: 'Key directa', price: 25, image: images.windows10, notes: 'Licencia para un equipo Windows.' }),
   license({ id: 'WIN11-RET', name: 'Windows 11 Pro Retail', brand: 'Windows', duration: 'Permanente', devices: '1 PC', delivery: 'Key directa', price: 19, image: images.windows, notes: 'Licencia para un equipo Windows.' }),
   license({ id: 'WIN11-OEM', name: 'Windows 11 Pro OEM', brand: 'Windows', duration: 'Permanente', devices: '1 PC', delivery: 'Key directa', price: 25, image: images.windows, notes: 'Licencia para un equipo Windows.' }),
-  license({ id: 'CAN-EDU-01M', name: 'Canva Pro Edu – Invitación a equipo', brand: 'Canva', duration: '1 mes', devices: '1 cupo', delivery: 'Invitación a equipo', price: 5, image: images.canva1, renewable: true, notes: 'Requiere cuenta propia y comprobación de elegibilidad o autorización educativa.' }),
-  license({ id: 'CAN-EDU-03M', name: 'Canva Pro Edu – Invitación a equipo', brand: 'Canva', duration: '3 meses', devices: '1 cupo', delivery: 'Invitación a equipo', price: 10, image: images.canva3, renewable: true, notes: 'Requiere cuenta propia y comprobación de elegibilidad o autorización educativa.' }),
-  license({ id: 'CAN-EDU-06M', name: 'Canva Pro Edu – Invitación a equipo', brand: 'Canva', duration: '6 meses', devices: '1 cupo', delivery: 'Invitación a equipo', price: 20, image: images.canva6, renewable: true, notes: 'Requiere cuenta propia y comprobación de elegibilidad o autorización educativa.' }),
-  license({ id: 'CAN-EDU-12M', name: 'Canva Pro Edu – Invitación a equipo', brand: 'Canva', duration: '12 meses', devices: '1 cupo', delivery: 'Invitación a equipo', price: 30, image: images.canva12, renewable: true, notes: 'Requiere cuenta propia y comprobación de elegibilidad o autorización educativa.' }),
+  license({ id: 'CAN-EDU', name: 'Canva Pro Edu – Invitación a equipo', brand: 'Canva', duration: '1 mes', devices: '1 cupo', delivery: 'Invitación a equipo', price: 5, image: images.canva, renewable: true, notes: 'Requiere cuenta propia y comprobación de elegibilidad o autorización educativa.', variants: [{ id: 'CAN-EDU-01M', label: '1 mes', price: 5 }, { id: 'CAN-EDU-03M', label: '3 meses', price: 10 }, { id: 'CAN-EDU-06M', label: '6 meses', price: 20 }, { id: 'CAN-EDU-12M', label: '12 meses', price: 30 }] }),
   license({ id: 'CAP-TEAM-01M', name: 'CapCut Pro Team', brand: 'CapCut', duration: '1 mes', devices: 'Hasta 2 dispositivos', delivery: 'Cuenta generada', price: 19, image: images.capcut, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.' }),
   license({ id: 'GEM-INV-18M', name: 'Gemini Pro – Invitación', brand: 'Gemini', duration: '18 meses', devices: '1 dispositivo', delivery: 'Invitación al correo', price: 19, image: images.gemini, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.' }),
   license({ id: 'GEM-LINK-18M', name: 'Gemini Pro – Activación directa', brand: 'Gemini', duration: '18 meses', devices: 'Hasta 6 dispositivos', delivery: 'Link de activación', price: 35, image: images.gemini, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.' }),

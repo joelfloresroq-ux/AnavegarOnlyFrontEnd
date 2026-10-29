@@ -6,7 +6,7 @@ export function useReveal(selector, key) {
   useEffect(() => {
     if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined
     const timer = window.setTimeout(() => {
-      const nodes = [...document.querySelectorAll(selector)].filter((node) => !node.classList.contains('rv'))
+      const nodes = [...document.querySelectorAll(selector)].filter((node) => !node.classList.contains('rv-in'))
       const seen = new Map()
       nodes.forEach((node) => {
         const index = seen.get(node.parentElement) || 0

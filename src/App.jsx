@@ -4,7 +4,7 @@ import { Link, NavLink, Route, Routes, usePath } from './router.jsx'
 import { Store, Cart, Checkout } from './Shop.jsx'
 import { CartProvider, useCart } from './cart.jsx'
 const anavegarLogo = '/brand/anavegar-logo-transparent.png'
-import { licenseProducts } from './catalog.js'
+import { licenseProducts, priceLabel } from './catalog.js'
 import ProductDetail from './ProductDetail.jsx'
 import Home from './Home.jsx'
 import { whatsappLink } from './whatsapp.js'
@@ -50,7 +50,7 @@ function Header() {
     <div className="top-note"><span>◎ Paga con Yape</span><span>⚡ Entrega por WhatsApp</span><span>Lun–Sáb · 9 a.m. – 6 p.m.</span></div>
     <header className="header">
       <Link className="brand-logo" to="/"><img src={anavegarLogo} alt="Anavegar Soluciones" /></Link>
-      <div className="search"><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Busca licencias de Office, Windows, Canva..." aria-label="Buscar productos" /><button aria-label="Buscar">⌕</button>{results.length > 0 && <div className="search-results">{results.map((product) => <Link key={product.id} to={`/producto/${product.id}`} onClick={() => setQuery('')}><Cover src={product.image} alt="" /><span><b>{product.name}</b><small>{product.brand} · S/ {product.price.toFixed(2)}</small></span></Link>)}</div>}{query.trim() && results.length === 0 && <div className="search-results empty-result">No encontramos productos para “{query}”.</div>}</div>
+      <div className="search"><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Busca licencias de Office, Windows, Canva..." aria-label="Buscar productos" /><button aria-label="Buscar">⌕</button>{results.length > 0 && <div className="search-results">{results.map((product) => <Link key={product.id} to={`/producto/${product.id}`} onClick={() => setQuery('')}><Cover src={product.image} alt="" /><span><b>{product.name}</b><small>{product.brand} · {priceLabel(product)}</small></span></Link>)}</div>}{query.trim() && results.length === 0 && <div className="search-results empty-result">No encontramos productos para “{query}”.</div>}</div>
       <div className="header-actions"><button className="theme-toggle" onClick={() => setDarkMode(!darkMode)} aria-label={darkMode ? 'Activar tema claro' : 'Activar tema oscuro'} title={darkMode ? 'Tema claro' : 'Tema oscuro'}>{darkMode ? '☀' : '☾'}</button><Link key={lastAdded?.key || 'cart'} className={lastAdded ? 'cart-link cart-link-bump' : 'cart-link'} to="/carrito">🛒 <b>Carrito ({count})</b></Link></div>
       <button className="theme-toggle mobile-theme" onClick={() => setDarkMode(!darkMode)} aria-label={darkMode ? 'Activar tema claro' : 'Activar tema oscuro'}>{darkMode ? '☀' : '☾'}</button>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Abrir menú">☰</button>
