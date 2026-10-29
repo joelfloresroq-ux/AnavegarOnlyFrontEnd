@@ -35,17 +35,7 @@ export const priceLabel = (product) => `${product.variants ? 'Desde ' : ''}S/ ${
 export const withVariant = (product, variant) => variant ? { ...product, id: variant.id, name: `${product.name} · ${variant.label}`, price: variant.price, variants: undefined } : product
 export const findProduct = (id) => licenseProducts.find((item) => item.id === id || item.variants?.some((variant) => variant.id === id))
 
-// Duraciones por defecto: precio inicial (1 mes) × meses, con 5% de descuento acumulado por cada salto
-// de duración (3 meses: 5%, 6 meses: 10%, 12 meses: 15%). Ajustar aquí para cambiar la regla.
-const DURATION_MONTHS = [1, 3, 6, 12]
-const STEP_DISCOUNT = 0.05
-const durationVariants = (id, basePrice) => DURATION_MONTHS.map((months, step) => ({
-  id: `${id}-${months}M`,
-  label: months === 1 ? '1 mes' : `${months} meses`,
-  price: Math.round(basePrice * months * (1 - STEP_DISCOUNT * step) * 100) / 100,
-}))
-
-export const bestSellerIds = ['OFF21-PHONE', 'WIN11-RET', 'M365-ACCOUNT', 'CAN-EDU', 'GEM-INV', 'CAP-TEAM']
+export const bestSellerIds = ['OFF21-PHONE', 'WIN11-RET', 'M365-ACCOUNT', 'CAN-EDU', 'GEM-INV-18M', 'CAP-TEAM-01M']
 
 export const licenseProducts = [
   license({ id: 'OFF16-PHONE', name: 'Office Retail Professional Plus 2016 — Activación por teléfono', brand: 'Office', duration: 'Permanente', devices: '1 dispositivo', delivery: 'Key Phone', activation: 'Por teléfono', price: 16, image: images.office2016, notes: 'Compatible con Windows. La activación se realiza por teléfono.' }),
@@ -53,14 +43,14 @@ export const licenseProducts = [
   license({ id: 'OFF21-PHONE', name: 'Office Retail Professional Plus 2021 — Activación por teléfono', brand: 'Office', duration: 'Permanente', devices: '1 dispositivo', delivery: 'Key Phone', activation: 'Por teléfono', price: 20, image: images.office2021, notes: 'Compatible con Windows. La activación se realiza por teléfono.' }),
   license({ id: 'OFF24-PHONE', name: 'Office Professional Plus LTSC 2024 — Activación por teléfono', brand: 'Office', duration: 'Permanente', devices: '1 dispositivo', delivery: 'Key Phone', activation: 'Por teléfono', price: 25, image: images.office2024, notes: 'Compatible con Windows. La activación se realiza por teléfono.' }),
   license({ id: 'OFF24-DIRECT', name: 'Office Professional Plus LTSC 2024 — Clave directa', brand: 'Office', duration: 'Permanente', devices: '1 dispositivo', delivery: 'Key directa', activation: 'Clave directa', price: 35, image: images.office2024, notes: 'Compatible con Windows. Recibes una clave directa para activar el producto.' }),
-  license({ id: 'M365-ACCOUNT', name: 'Microsoft 365 Pro – Cuenta nueva entregada', brand: 'Microsoft 365', duration: '12 meses', devices: 'Hasta 5 dispositivos', delivery: 'Cuenta generada', price: 25, image: images.microsoft365, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.', variants: durationVariants('M365-ACCOUNT', 25) }),
-  license({ id: 'M365-OWN', name: 'Microsoft 365 Pro – Cuenta propia', brand: 'Microsoft 365', duration: '12 meses', devices: 'Hasta 5 dispositivos', delivery: 'Invitación al correo', price: 45, image: images.microsoft365, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.', variants: durationVariants('M365-OWN', 45) }),
+  license({ id: 'M365-ACCOUNT', name: 'Microsoft 365 Pro – Cuenta nueva entregada', brand: 'Microsoft 365', duration: '12 meses', devices: 'Hasta 5 dispositivos', delivery: 'Cuenta generada', price: 25, image: images.microsoft365, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.' }),
+  license({ id: 'M365-OWN', name: 'Microsoft 365 Pro – Cuenta propia', brand: 'Microsoft 365', duration: '12 meses', devices: 'Hasta 5 dispositivos', delivery: 'Invitación al correo', price: 45, image: images.microsoft365, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.' }),
   license({ id: 'WIN10-RET', name: 'Windows 10 Pro Retail', brand: 'Windows', duration: 'Permanente', devices: '1 PC', delivery: 'Key directa', price: 19, image: images.windows10, notes: 'Licencia para un equipo Windows.' }),
   license({ id: 'WIN10-OEM', name: 'Windows 10 Pro OEM', brand: 'Windows', duration: 'Permanente', devices: '1 PC', delivery: 'Key directa', price: 25, image: images.windows10, notes: 'Licencia para un equipo Windows.' }),
   license({ id: 'WIN11-RET', name: 'Windows 11 Pro Retail', brand: 'Windows', duration: 'Permanente', devices: '1 PC', delivery: 'Key directa', price: 19, image: images.windows, notes: 'Licencia para un equipo Windows.' }),
   license({ id: 'WIN11-OEM', name: 'Windows 11 Pro OEM', brand: 'Windows', duration: 'Permanente', devices: '1 PC', delivery: 'Key directa', price: 25, image: images.windows, notes: 'Licencia para un equipo Windows.' }),
   license({ id: 'CAN-EDU', name: 'Canva Pro Edu – Invitación a equipo', brand: 'Canva', duration: '1 mes', devices: '1 cupo', delivery: 'Invitación a equipo', price: 5, image: images.canva, renewable: true, notes: 'Requiere cuenta propia y comprobación de elegibilidad o autorización educativa.', variants: [{ id: 'CAN-EDU-01M', label: '1 mes', price: 5 }, { id: 'CAN-EDU-03M', label: '3 meses', price: 10 }, { id: 'CAN-EDU-06M', label: '6 meses', price: 20 }, { id: 'CAN-EDU-12M', label: '12 meses', price: 30 }] }),
-  license({ id: 'CAP-TEAM', name: 'CapCut Pro Team', brand: 'CapCut', duration: '1 mes', devices: 'Hasta 2 dispositivos', delivery: 'Cuenta generada', price: 19, image: images.capcut, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.', variants: durationVariants('CAP-TEAM', 19) }),
-  license({ id: 'GEM-INV', name: 'Gemini Pro – Invitación', brand: 'Gemini', duration: '18 meses', devices: '1 dispositivo', delivery: 'Invitación al correo', price: 19, image: images.gemini, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.', variants: durationVariants('GEM-INV', 19) }),
-  license({ id: 'GEM-LINK', name: 'Gemini Pro – Activación directa', brand: 'Gemini', duration: '18 meses', devices: 'Hasta 6 dispositivos', delivery: 'Link de activación', price: 35, image: images.gemini, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.', variants: durationVariants('GEM-LINK', 35) }),
+  license({ id: 'CAP-TEAM-01M', name: 'CapCut Pro Team', brand: 'CapCut', duration: '1 mes', devices: 'Hasta 2 dispositivos', delivery: 'Cuenta generada', price: 19, image: images.capcut, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.' }),
+  license({ id: 'GEM-INV-18M', name: 'Gemini Pro – Invitación', brand: 'Gemini', duration: '18 meses', devices: '1 dispositivo', delivery: 'Invitación al correo', price: 19, image: images.gemini, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.' }),
+  license({ id: 'GEM-LINK-18M', name: 'Gemini Pro – Activación directa', brand: 'Gemini', duration: '18 meses', devices: 'Hasta 6 dispositivos', delivery: 'Link de activación', price: 35, image: images.gemini, renewable: true, notes: 'Compatible con Windows, Mac, iOS y Android.' }),
 ]
